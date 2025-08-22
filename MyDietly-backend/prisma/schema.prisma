@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String            @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String            @unique
+  password      String            @map("password")
+  createdAt     DateTime          @default(now()) @map("created_at")
+
+  userMetrics   UserMetric[]
+  diets         Diet[]
+
+  @@map("users") 
+}
+
+
+model UserMetric {
+  id            String            @id @default(auto()) @map("_id") @db.ObjectId
+  weight        Float
+  height        Float
+  activityLevel String
+  foodAllergy   String?
+  diseasesOrConditions String?
+  age           Int
+  goal          String
+  registeredAt  DateTime          @default(now()) @map("registered_at")
+
+
+  userId        String            @map("user_id") @db.ObjectId
+  user          User              @relation(fields: [userId], references: [id])
+
+  @@map("user_metrics")
+}
+
+
+model Diet {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  name            String?     
+  summary         String?      
+  generatedAt     DateTime          @default(now()) @map("generated_at")
+
+  userId          String            @map("user_id") @db.ObjectId
+  user            User              @relation(fields: [userId], references: [id])
+
+  details         DietDetail[]
+
+  @@map("diets")
+}
+
+model DietDetail {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  dayOfWeek       String            @map("day_of_week")
+  time            String
+  food            String
+
+  dietId          String            @map("diet_id") @db.ObjectId
+  diet            Diet              @relation(fields: [dietId], references: [id])
+
+  @@map("diet_details")
+}
