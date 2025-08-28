@@ -1,0 +1,146 @@
+.gradient-background-blue-green {
+  width: 100%;
+  height: 100vh;
+  background-color: hsl(197, 96%, 48%);
+  background-image: linear-gradient(
+    135deg,
+    hsl(197, 96%, 48%),
+    hsl(142, 76%, 36%)
+  );
+}
+
+.container-general{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.welcome-mydietly {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  gap: 5px;
+}
+
+.heart-icon {
+  width: 1em;
+  height: 1em;
+  stroke: hsl(0, 0%, 100%);
+}
+
+.mydietly-title {
+  background: linear-gradient(135deg, hsl(0, 0%, 100%), hsl(197, 96%, 48%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.welcome-message {
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: bold;
+}
+
+.description {
+  text-align: center;
+  font-size: 1.25rem;
+  margin-top: 1rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 1rem;
+  padding: 10px;
+}
+
+.primary-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 24px 32px;
+  height: 48px;
+  background: linear-gradient(135deg, hsl(142, 76%, 36%), hsl(142, 70%, 45%));
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.button-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+}
+
+.secondary-button {
+  display: flex;
+  align-items: center;
+  padding: 24px 32px;
+  color: #16a249;
+  font-size: 18px;
+  height: 48px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.secondary-button:hover {
+  color: white;
+  background: linear-gradient(135deg, hsl(142, 76%, 36%), hsl(142, 70%, 45%));
+}
+
+/* .cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.card-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  width: 282px;
+}
+
+.card-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.856);
+  transition: all 0.3s ease;
+}
+
+.card-header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-icon{
+  width: 3em;
+  height: 3em;
+  stroke: #ffffff;
+  background-color: #16a249;
+  border-radius: 50%;
+  padding: 8px;
+}
+
+.card-description{
+  text-align: center;
+  margin-top: 16px;
+  font-size: 1rem;
+  color: #555555;
+  font-family: 'Courier New', Courier, monospace;
+} */

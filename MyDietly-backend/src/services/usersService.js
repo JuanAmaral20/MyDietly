@@ -33,7 +33,7 @@ class UsersService {
     }
 
     const payload = { userId: user.id };
-
+ 
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     const { password: _, ...userWithoutPassword } = user;
