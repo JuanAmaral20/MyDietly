@@ -1,7 +1,8 @@
 import React from "react";
 import "./index.css";
-import { HeartHandshake, Target, Zap, Users } from "lucide-react";
+import { HeartHandshake, Target } from "lucide-react";
 import Cards from "../../components/cardsHome";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -23,12 +24,12 @@ const Home = () => {
         </p>
       </div>
       <div className="button-container">
-        <button className="primary-button">
+        <Link to="/register" className="primary-button">
           <div className="button-content">
             <Target />
             <span>Começar Agora</span>
           </div>
-        </button>
+        </Link>
         <button className="secondary-button">Já tenho uma conta</button>
       </div>
       <Cards />

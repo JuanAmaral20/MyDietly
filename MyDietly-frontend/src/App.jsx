@@ -2,6 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 // import Projects from "./pages/Projects/Projects.jsx";
 import Home from "./pages/Home/index.jsx";
+import Register from "./pages/Register/index.jsx";
 // import AboutMe from "./pages/AboutMe/aboutme.jsx";
 
 function App() {
@@ -9,8 +10,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/projects" element={<Projects />} />
-        <Route path="/about" element={<AboutMe />} /> */}
+        <Route path="/register" element={<Register />} />
+        {/* <Route path="/about" element={<AboutMe />} /> */}
       </Routes>
     </BrowserRouter>
   );
