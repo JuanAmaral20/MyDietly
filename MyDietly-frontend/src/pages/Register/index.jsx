@@ -13,12 +13,30 @@ const Register = () => {
       alert("As senhas não coincidem. Por favor, tente novamente.");
       return;
     }
+
+    if(!data.name || !data.email || !data.password || !data["confirm-password"]) {
+      alert("Por favor, preencha todos os campos.");
+      return;
+    }
     try {
       const { confirmPassword, ...apiData } = data;
       const response = await api.post("/users", apiData);
+
+      alert("Usuário registrado com sucesso!");
+      const inputs = document.querySelectorAll(".input-default");
+      inputs.forEach((input) => (input.value = ""));
+
+      const toHome = document.querySelector(".link-to-home");
+      toHome.click();
+
       console.log("User registered successfully:", response.data);
     } catch (error) {
-      console.error("Error registering user:", error);
+      const errorMessage = error.response?.data?.message || "Ocorreu um erro ao registrar.";
+      if(errorMessage.includes("E-mail já cadastrado")) {
+        alert("E-mail já cadastrado. Por favor, utilize outro e-mail.");
+      } else {
+        alert(errorMessage);
+      }
     }
   };
   return (
@@ -26,10 +44,10 @@ const Register = () => {
       <div className="container-general-register">
         <div className="container-register">
           <div className="header-register">
-            <div className="welcome-mydietly-register">
+            <Link className="welcome-mydietly-register" to="/">
               <HeartHandshake />
-              <Link className="link-to-home" to="/">My Dietly</Link>
-            </div>
+              <p className="link-to-home">My Dietly</p>
+            </Link>
             <h3 className="register-now">Crie sua conta</h3>
             <p className="register-description">
               Comece sua jornada para uma vida mais saudável
