@@ -1,4 +1,4 @@
-.gradient-background-blue-green {
+/* .gradient-background-blue-green {
   width: 100%;
   height: 100vh;
   background-color: hsl(197, 96%, 48%);
@@ -7,7 +7,7 @@
     hsl(197, 96%, 48%),
     hsl(142, 76%, 36%)
   );
-}
+} */
 
 .container-general{
   display: flex;
@@ -91,6 +91,8 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  background-color: #ffffff;
+  text-decoration: none;
 }
 
 .secondary-button:hover {
