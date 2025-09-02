@@ -2,6 +2,9 @@
   "name": "mydietly-backend",
   "version": "1.0.0",
   "type": "module",
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "main": "index.js",
   "scripts": {
     "start": "node src/server.js",
