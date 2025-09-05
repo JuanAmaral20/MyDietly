@@ -33,7 +33,8 @@ class UsersService {
     }
 
     const payload = { userId: user.id };
- 
+
+    console.log("CRIANDO token com a chave:", process.env.JWT_SECRET);
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     const { password: _, ...userWithoutPassword } = user;
@@ -58,6 +59,13 @@ class UsersService {
     });
 
     return userMetric;
+  }
+
+  async findUserById(userId) {
+    const user = await UsersRepository.findById(userId);
+    if (!user) throw new Error('User not found');
+    const { password, ...userWithoutPassword } = user;
+    return userWithoutPassword;
   }
 }
 

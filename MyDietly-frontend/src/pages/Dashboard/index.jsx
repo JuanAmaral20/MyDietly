@@ -1,14 +1,20 @@
 import { useNavigate } from "react-router-dom";
-import { HeartHandshake, User, LogOut } from "lucide-react";
+import { HeartHandshake, User, LogOut, Target } from "lucide-react";
 import "./index.css";
 import api from "../../services/api";
 import { useEffect, useState } from "react";
+import LoadingSpinner from "../../components/Spinner";
 
 const Dashboard = () => {
   const [goals, setGoals] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   const [selectedGoal, setSelectedGoal] = useState("");
   const navigate = useNavigate();
+  const [generatedDiet, setGeneratedDiet] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  console.log("--- RENDERIZANDO O DASHBOARD ---");
+  console.log("Valor atual de generatedDiet:", generatedDiet);
 
   function handleLogout() {
     localStorage.removeItem("authToken");
@@ -18,16 +24,14 @@ const Dashboard = () => {
   useEffect(() => {
     async function fetchUserInfo() {
       try {
-        const response = await api.get("/users");
+        const response = await api.get("/users/me");
         setUserInfo(response.data);
+        console.log("Dados do usuário recebidos da API:", response.data);
       } catch (error) {
         console.error("Failed to fetch user info", error);
       }
     }
-    fetchUserInfo();
-  }, []);
 
-  useEffect(() => {
     async function fetchGoals() {
       try {
         const response = await api.get("/goals");
@@ -36,8 +40,65 @@ const Dashboard = () => {
         console.error("Failed to fetch goals", error);
       }
     }
-    fetchGoals();
+
+    async function fetchUserDiet() {
+      try {
+        const response = await api.get("/diets/me");
+        if (response.data) {
+          console.log("Dieta existente encontrada:", response.data);
+          setGeneratedDiet(response.data);
+        }
+      } catch (error) {
+        if (error.response?.status !== 404) {
+          console.error("Failed to fetch user diet", error);
+        }
+      }
+    }
+    Promise.all([fetchUserInfo(), fetchGoals(), fetchUserDiet()]);
   }, []);
+
+  async function generateMetricAndDiet(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+
+    if (
+      !data.weight ||
+      !data.age ||
+      !data.height ||
+      !data.goalId ||
+      !data.activityLevel
+    ) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    setIsLoading(true);
+    setGeneratedDiet(null);
+
+    try {
+      const metricData = {
+        weight: parseFloat(data.weight),
+        age: parseInt(data.age, 10),
+        height: parseFloat(data.height),
+        goalId: data.goalId,
+        activityLevel: data.activityLevel,
+        foodAllergy: data.foodAllergy || null,
+        diseasesOrConditions: data.diseasesOrConditions || null,
+      };
+
+      const response = await api.post("/gemini/diet-tip", metricData);
+      console.log("Dieta gerada e salva com sucesso:", response.data);
+      setGeneratedDiet(response.data);
+    } catch (error) {
+      console.error("Erro ao gerar a dieta:", error);
+      const errorMessage =
+        error.response?.data?.message || "Ocorreu um erro ao gerar a dieta.";
+      alert(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <div>
@@ -71,11 +132,18 @@ const Dashboard = () => {
         </p>
       </div>
       <div className="form-section">
-        <form className="diet-form" action="">
+        <form onSubmit={generateMetricAndDiet} className="diet-form" action="">
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="weight">Peso atual (kg)*:</label>
-              <input type="number" id="weight" name="weight" min="0" required placeholder="Ex: 70"/>
+              <input
+                type="number"
+                id="weight"
+                name="weight"
+                min="0"
+                required
+                placeholder="Ex: 70"
+              />
             </div>
             <div className="form-group">
               <label htmlFor="age">Idade (anos)*:</label>
@@ -86,14 +154,21 @@ const Dashboard = () => {
                 min="0"
                 max="120"
                 required
-                placeholder="Ex: 170"
+                placeholder="Ex: 25"
               />
             </div>
           </div>
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="height">Altura (cm)*:</label>
-              <input type="number" id="height" name="height" min="0" required placeholder="Ex: 25" />
+              <input
+                type="number"
+                id="height"
+                name="height"
+                min="0"
+                required
+                placeholder="Ex: 170"
+              />
             </div>
           </div>
           <div className="form-row">
@@ -101,8 +176,8 @@ const Dashboard = () => {
               <label htmlFor="goal">Qual é o seu objetivo? *</label>
               <select
                 id="goalId"
-                name="goalId" 
-                className="select-default" 
+                name="goalId"
+                className="select-default"
                 value={selectedGoal}
                 onChange={(e) => setSelectedGoal(e.target.value)}
                 required
@@ -135,18 +210,77 @@ const Dashboard = () => {
               <label htmlFor="foodAllergy">
                 Alergias alimentares (opcional):
               </label>
-              <input type="text" id="foodAllergy" name="foodAllergy" placeholder="Ex: Glúten, Lactose, amendoim..." />
+              <input
+                type="text"
+                id="foodAllergy"
+                name="foodAllergy"
+                placeholder="Ex: Glúten, Lactose, amendoim..."
+              />
             </div>
             <div className="form-group">
               <label htmlFor="conditions">
                 Doenças ou condições (opcional):
               </label>
-              <input type="text" id="conditions" name="conditions" placeholder="Ex: Diabetes, Hipertensão..." />
+              <input
+                type="text"
+                id="diseasesOrConditions"
+                name="diseasesOrConditions"
+                placeholder="Ex: Diabetes, Hipertensão..."
+              />
             </div>
           </div>
-          <button className="generate-diet-button">Gerar Dieta</button>
+          <div className="container-generate-diet">
+            <button type="submit" className="generate-diet-button">
+              <Target className="target-icon" />
+              Gerar Dieta
+            </button>
+          </div>
         </form>
       </div>
+      {isLoading && (
+        <div className="loading-text">
+          <LoadingSpinner />
+          <p className="loading-message">
+            Gerando sua dieta personalizada, por favor aguarde...
+          </p>
+        </div>
+      )}
+
+      {generatedDiet && !isLoading && (
+        <>
+          <div className="diet-plan">
+            <h2 className="diet-plan-title">Sua Dieta Personalizada 🍽️</h2>
+            <div className="diet-goal-info">
+              <p className="goal-user-info">
+                Plano alimentar baseado no seu objetivo:
+              </p>
+              <p className="goal-user">
+                {" "}
+                {goals.find((goal) => goal.id === selectedGoal)?.name}
+              </p>
+            </div>
+          </div>
+          <div className="diet-section">
+            <div className="diet-container">
+              {Array.isArray(generatedDiet.dailyPlans) &&
+                generatedDiet.dailyPlans.map((dayPlan) => (
+                  <div className="diet-json" key={dayPlan.dayOfWeek}>
+                    <p className="day">{dayPlan.dayOfWeek}</p>
+                    {dayPlan.meals.map((meal) => (
+                      <div className="meal-item">
+                        <span className="hour">{meal.time}</span>
+                        <span className="food-item">{meal.food}</span>
+                        <div className="calories">
+                          <span>{meal.calories} </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

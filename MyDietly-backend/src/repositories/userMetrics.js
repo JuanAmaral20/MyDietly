@@ -9,6 +9,19 @@ class UserMetricsRepository {
       },
     });
   }
+    async createMetric({ userId, goalId, ...restOfMetrics }) {
+    return prisma.userMetric.create({
+      data: {
+        ...restOfMetrics,
+        user: {
+          connect: { id: userId },
+        },
+        goal: {
+          connect: { id: goalId },
+        },
+      },
+    });
+  }
 }
 
 export default new UserMetricsRepository();

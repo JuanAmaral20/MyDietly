@@ -4,6 +4,6 @@ import geminiController from "../controllers/geminiController.js";
 
 const geminiRouter = Router();
 
-geminiRouter.get('/diet-tip', authenticateToken, geminiController.generateAndSaveDiet);
+geminiRouter.post('/diet-tip', authenticateToken, geminiController.createMetricsAndGenerateDiet);
 
 export default geminiRouter;

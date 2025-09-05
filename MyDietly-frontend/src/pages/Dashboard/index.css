@@ -219,6 +219,166 @@ input::placeholder {
     color: #364050;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-
 }
 
+.container-generate-diet{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.generate-diet-button{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #1eb957;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-weight: 600;
+}
+
+.diet-result{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+.loading-text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.loading-message{
+    font-size: 1rem;
+    color: #64748b;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.diet-plan{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.diet-plan-title{
+    font-size: 1.5rem;
+    color: #364050;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-weight: 700;
+}
+
+.diet-goal-info{
+    display: flex;
+
+    align-items: center;
+    gap: 5px;
+}
+
+.goal-user-info{
+    font-size: 1rem;
+    color: #64748b;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    text-align: center;
+}
+
+.goal-user{
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1eb957;
+}
+
+.diet-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.diet-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin-top: 40px;
+    padding: 0 20px;
+}
+
+.diet-json{
+    background-color: #FBFCFD;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.diet-json:hover{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.day{
+    font-size: 1.0rem;
+    font-weight: 600;
+    color: #1eb957;
+}
+
+.meal-item{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    background-color: #FEFEFE;
+    border: 1px solid #F0F3F7;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.hour{
+    font-size: 1.0rem;
+    font-weight: 600;
+    color: #05ADF0;
+}
+
+.food-item{
+    font-size: 0.9rem;
+    color: #364050;
+    text-align: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.calories{
+    border: 1px solid #F0F3F7;
+    border-radius: 50px;
+    padding: 5px 10px;
+}
+
+.calories span{
+    font-size: 0.8rem;
+    color: #64748b;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-weight: 700;
+}

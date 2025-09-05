@@ -8,7 +8,7 @@ class UsersController {
       return res.status(201).json(user);
     } catch (error) {
 
-        if (error.message === 'E-mail já cadastrado.') {
+      if (error.message === 'E-mail já cadastrado.') {
         return res.status(409).json({ message: error.message });
       }
       return res.status(500).json({ message: 'Internal Server Error' });
@@ -24,7 +24,7 @@ class UsersController {
       if (error.message === 'Invalid email or password') {
         return res.status(401).json({ message: error.message });
       }
-      console.error('Login Error:', error); 
+      console.error('Login Error:', error);
       return res.status(500).json({ message: 'Internal Server Error' });
     }
   }
@@ -48,6 +48,20 @@ class UsersController {
     } catch (error) {
       console.error('Error creating user metric:', error);
       return res.status(500).json({ message: 'Error creating user metric' });
+    }
+  }
+
+  async getCurrentUser(req, res) {
+    try {
+      const userId = req.userId;
+      const user = await UsersService.findUserById(userId);
+      return res.status(200).json(user);
+    } catch (error) {
+      console.error('Error fetching user by ID:', error);
+      if (error.message.includes('not found')) {
+        return res.status(404).json({ message: error.message });
+      }
+      return res.status(500).json({ message: 'Internal Server Error' });
     }
   }
 }
