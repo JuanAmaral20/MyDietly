@@ -38,7 +38,7 @@ class DietController {
         try {
             const { dietId } = req.params;
             const { userId } = req;
-            const diet = await DietService.findDietById(userId, dietId);
+            const diet = await DietService.findDietById(dietId, userId);
             if (!diet) {
                 return res.status(404).json({ message: 'Diet not found' });
             }

@@ -278,6 +278,23 @@ const Dashboard = () => {
                   </div>
                 ))}
             </div>
+          <div className="diet-tips-section">
+            <p className="diet-note">
+              💡Dicas importantes
+            </p>
+            <div className="tips-container">
+              <div className="diet-tips">
+                <p>• Beba pelo menos 2L de água por dia</p>
+                <p>• Respeite os horários das refeições</p>
+                <p>• Evite alimentos processados</p>
+              </div>
+              <div className="diet-tips">
+                <p>• Pratique exercícios regularmente</p>
+                <p>• Durma pelo menos 8 horas por noite</p>
+                <p>• Consulte um nutricionista</p>
+              </div>
+            </div>
+          </div>
           </div>
         </>
       )}
